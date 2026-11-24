@@ -45,7 +45,9 @@ class MqttSubscriber:
         self.subscriber.disconnect()
 
 if __name__ == '__main__':
+    subs = None
     try:
         subs = MqttSubscriber()
     except KeyboardInterrupt as e:
-        subs.shutdown()
+        if subs is not None:
+            subs.shutdown()
