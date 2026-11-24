@@ -40,3 +40,12 @@ class MqttSubscriber:
          f"BTN_SQR:{'TRUE' if steering_data['btn_square'] else 'FALSE'} "
          f"PAD_R:{'TRUE' if steering_data['r_paddleshifter'] else 'FALSE'}"
          f"PAD_L:{'TRUE' if steering_data['l_paddleshifter'] else 'FALSE'}")
+
+    def shutdown(self):
+        self.subscriber.disconnect()
+
+if __name__ == '__main__':
+    try:
+        subs = MqttSubscriber()
+    except KeyboardInterrupt as e:
+        subs.shutdown()

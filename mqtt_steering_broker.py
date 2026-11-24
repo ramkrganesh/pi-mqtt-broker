@@ -1,5 +1,7 @@
 import paho.mqtt.client as client
 from dataclasses import dataclass, field
+from random import randrange
+from json import dumps
 
 @dataclass
 class MqttSteeringBroker:
@@ -31,3 +33,25 @@ class MqttSteeringBroker:
     def mqtt_shutdown(self):
         self.pi_client.loop_stop()
         self.pi_client.disconnect()
+
+if __name__ == '__main__':
+    mqtt_pub = MqttSteeringBroker()
+    try:
+        while True:
+            steering_data = {
+                "throttle": randrange(1,100) / 1.1,
+                "breaking": randrange(1,100) / 1.1,
+                "steering_pos": randrange(1,3),
+                "steering_rot": randrange(1,100) / 1.1,
+                "btn_triangle": randrange(0,2),
+                "btn_circle": randrange(0,2),
+                "btn_x": randrange(0,2),
+                "btn_square": randrange(0, 2),
+                "r_paddleshifter": randrange(0,2),
+                "l_paddleshifter": randrange(0,2)
+            }
+            msg = dumps(steering_data)
+            mqtt_pub.mqtt_publish(msg=msg)
+    except KeyboardInterrupt as e:
+        mqtt_pub.mqtt_shutdown()
+    #end try
