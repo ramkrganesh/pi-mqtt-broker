@@ -29,6 +29,7 @@ class MqttSteeringBroker:
     def mqtt_publish(self, msg:str):
         pub = self.pi_client.publish(topic=self.topic, payload=msg)
         pub.wait_for_publish(timeout=2.0)  # blocking call
+        print(f"Published {msg}")
 
     def mqtt_shutdown(self):
         self.pi_client.loop_stop()
