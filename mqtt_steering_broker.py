@@ -10,7 +10,7 @@ class MqttSteeringBroker:
     topic:str = 'steering_data'
 
     def __post_init__(self):
-        self.pi_client = client.Client()
+        self.pi_client = client.Client(client.CallbackAPIVersion.VERSION2)
         self.pi_client.username_pw_set(username='pi_steering',
                                        password='707070')
         self.pi_client.on_connect = MqttSteeringBroker.on_connect

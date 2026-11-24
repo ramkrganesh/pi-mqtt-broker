@@ -9,7 +9,7 @@ class MqttSubscriber:
     topic: str = 'steering_data'
 
     def __post_init__(self):
-        self.subscriber = client.Client()
+        self.subscriber = client.Client(client.CallbackAPIVersion.VERSION2)
         self.subscriber.on_connect = self.on_connect
         self.subscriber.on_message = self.on_message
         self.subscriber.username_pw_set(username='pi_car',
